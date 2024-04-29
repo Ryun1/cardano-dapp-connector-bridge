@@ -17,12 +17,13 @@ function initCardanoDAppConnectorBridge(onBridgeCreated) {
   var _requestMap             = { }
   var _methodMap              = {
 
-    // Initial 3 methods to establish connection. More endpoints will be added by the wallet.
+    // Initial 4 methods to establish connection. More endpoints will be added by the wallet.
 
     connect:                  'connect',
     handshake:                'handshake',
     enable:                   'enable',
-    isEnabled:                'isEnabled'
+    isEnabled:                'isEnabled',
+    supportedExtensions:      'supportedExtensions'
   }
 
   function generateUID() {
@@ -128,13 +129,14 @@ function initCardanoDAppConnectorBridge(onBridgeCreated) {
 
       // https://github.com/cardano-foundation/CIPs/tree/master/CIP-0030
       isEnabled:              function() { return createRequest('isEnabled') },
-      enable:                 function() { return createRequest('enable') },
+      enable:                 function() { return createRequest('enable', ...arguments) },
 
       apiVersion:             initialApi.apiVersion,
       name:                   initialApi.name,
       icon:                   initialApi.icon         ? initialApi.icon : null,
+      supportedExtensions:    initialApi.supportedExtensions,
 
-      // extension: https://github.com/cardano-foundation/CIPs/pull/183
+      // experimental API: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0030/README.md#experimental-api
       experimental:           {}
     }
 
